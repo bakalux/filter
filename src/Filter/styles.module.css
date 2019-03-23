@@ -1,0 +1,30 @@
+.buttonWrapper {
+  margin-top: 5px;
+}
+
+.closeIcon {
+  max-height: 16px;
+}
+
+.closeIcon:hover {
+  cursor: pointer;
+}
+
+.conditionWrapper {
+  border-bottom: solid 1px #cbd0d8;
+}
+
+.inputWrapper {
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.wrapper {
+  width: 500px;
+}

@@ -1,0 +1,28 @@
+.button {
+  border: solid 1px #cbd0d8;
+  border-radius: 3px;
+  color: #3d3e3f;
+  display: inline-block;
+  margin: 5px;
+  padding: 5px 20px;
+
+  -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.button:hover {
+  background: #e3e6ea;
+  cursor: pointer;
+}
+
+.primary {
+  background: #0072FF;
+  color: white;
+}
+
+.primary:hover {
+  background: #0155c4;
+}
