@@ -54,27 +54,25 @@ const textConditionOptions = [
     value: 'ends with',
     label: 'Ends with',
   },
-]
+];
+
+const initialState = {
+  conditions: [
+    {
+      id: 0,
+      type: 'text',
+      operation: 'containing',
+      value: '',
+    }
+  ],
+  conditionCount: 1,
+  idCounter: 0,
+}
 
 class Filter extends Component {
   constructor() {
     super();
-    this.state = {
-      conditions: [
-        {
-          id: 0,
-          type: 'text',
-          operation: 'containing',
-          value: '',
-        }
-      ],
-      conditionCount: 1,
-      idCounter: 0,
-    }
-  }
-
-  apply = () => {
-
+    this.state = initialState;
   }
 
   handleAddition = () => {
@@ -94,21 +92,6 @@ class Filter extends Component {
     })
   }
 
-  handleInputChange = e => {
-    const { conditions } = this.state;
-    const { id, value } = e.target;
-
-    const currentConditionIndex = conditions.findIndex(condition => id == condition.id);
-    if (conditions[ currentConditionIndex ].type === 'number') {
-      conditions[ currentConditionIndex ].value = parseInt(value) ? parseInt(value) : '';
-    } else {
-      conditions[ currentConditionIndex ].value = value;
-    }
-    this.setState({
-      conditions
-    });
-  }
-
   handleClear = () => {
     const initialState = {
       conditions: [
@@ -122,8 +105,24 @@ class Filter extends Component {
       conditionCount: 1,
       idCounter: 0,
     }
+
     this.setState({
-      ...initialState
+      ...initialState,
+    });
+  }
+
+  handleInputChange = e => {
+    const { conditions } = this.state;
+    const { id, value } = e.target;
+
+    const currentConditionIndex = conditions.findIndex(condition => parseInt(id) === condition.id);
+    if (conditions[ currentConditionIndex ].type === 'number') {
+      conditions[ currentConditionIndex ].value = parseInt(value) ? parseInt(value) : '';
+    } else {
+      conditions[ currentConditionIndex ].value = value;
+    }
+    this.setState({
+      conditions
     });
   }
 
@@ -131,7 +130,7 @@ class Filter extends Component {
     const { conditions } = this.state;
     const { id, value } = e.target;
 
-    const currentConditionIndex = conditions.findIndex(condition => id == condition.id);
+    const currentConditionIndex = conditions.findIndex(condition => parseInt(id) === condition.id);
 
     conditions[ currentConditionIndex ].operation = value;
 
@@ -145,7 +144,7 @@ class Filter extends Component {
     let { conditionCount } = this.state;
     const { id } = e.target;
 
-    const newConditions = conditions.filter(condition => condition.id != id);
+    const newConditions = conditions.filter(condition => condition.id !== parseInt(id));
 
     this.setState({
       conditions: newConditions,
@@ -158,7 +157,7 @@ class Filter extends Component {
     const { conditions } = this.state;
     const { id, value } = e.target;
 
-    const currentConditionIndex = conditions.findIndex(condition => id == condition.id);
+    const currentConditionIndex = conditions.findIndex(condition => parseInt(id) === condition.id);
 
     conditions[ currentConditionIndex ].type = value;
     conditions[ currentConditionIndex ].operation = value === 'number' ? 'equal' : 'containing';
@@ -208,7 +207,6 @@ class Filter extends Component {
                   id={ id }
                   onChange={ this.handleInputChange }
                   value={ value }
-
                 />
               </div>
               { this.state.conditionCount > 1 &&
